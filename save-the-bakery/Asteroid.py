@@ -7,7 +7,8 @@ class Asteroid(pygame.sprite.Sprite):
         self.image = pygame.image.load(image_file)
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = location
+        self.location = location
+        self.rect.left, self.rect.top = self.location
         self.width, self.height = size
 
     def update(self, screen):

@@ -4,7 +4,7 @@ from Bullet import Bullet
 
 class Player:
 
-    def __init__(self, image_file, location, size, speed):
+    def __init__(self, image_file, location, size, speed, bullet_speed):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image_file)
         self.image = pygame.transform.scale(self.image, size)
@@ -13,6 +13,7 @@ class Player:
         self.width, self.height = size
         self.speed = speed
         self.bullets = []
+        self.bullet_speed = bullet_speed
         self.last_shot = pygame.time.get_ticks()
 
     def move(self, screen, keys):
@@ -34,11 +35,11 @@ class Player:
             b = Bullet(
                 './assets/bullet.png', 
                 [self.rect.left + self.width / 2, self.rect.top + self.height / 2], 
-                [15, 60]
+                [15, 60],
+                self.bullet_speed
             )
 
-            self.bullets.append(b)
-     
+            self.bullets.append(b)     
     
     def update(self, screen):
         keys = pygame.key.get_pressed()
