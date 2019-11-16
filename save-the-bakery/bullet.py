@@ -10,7 +10,6 @@ class Bullet:
         self.rect.left, self.rect.top = location
         self.width, self.height = size
 
-        #offseting bullet spawn
         self.rect.left -= self.width / 2
         self.rect.top -= self.height / 2 
 
