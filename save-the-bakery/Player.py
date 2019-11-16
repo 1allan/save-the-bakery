@@ -54,3 +54,4 @@ class Player:
             b.update(screen)
         
         self.move(screen, keys)
+        screen.blit(self.image, self.rect)
