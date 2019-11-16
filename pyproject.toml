@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "major-town"
+name = "save-the-bakery"
 version = "0.1.0"
 description = ""
 authors = ["Allan Soares <coallanvei@gmail.com>"]
