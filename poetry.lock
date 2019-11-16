@@ -1,0 +1,128 @@
+[[package]]
+category = "dev"
+description = "Atomic file writes."
+name = "atomicwrites"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "1.3.0"
+
+[[package]]
+category = "dev"
+description = "Classes Without Boilerplate"
+name = "attrs"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "19.3.0"
+
+[[package]]
+category = "dev"
+description = "Cross-platform colored terminal text."
+marker = "sys_platform == \"win32\""
+name = "colorama"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "0.4.1"
+
+[[package]]
+category = "dev"
+description = "Read metadata from Python packages"
+marker = "python_version < \"3.8\""
+name = "importlib-metadata"
+optional = false
+python-versions = ">=2.7,!=3.0,!=3.1,!=3.2,!=3.3"
+version = "0.23"
+
+[package.dependencies]
+zipp = ">=0.5"
+
+[[package]]
+category = "dev"
+description = "More routines for operating on iterables, beyond itertools"
+name = "more-itertools"
+optional = false
+python-versions = ">=3.4"
+version = "7.2.0"
+
+[[package]]
+category = "dev"
+description = "plugin and hook calling mechanisms for python"
+name = "pluggy"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "0.13.0"
+
+[package.dependencies]
+[package.dependencies.importlib-metadata]
+python = "<3.8"
+version = ">=0.12"
+
+[[package]]
+category = "dev"
+description = "library with cross-python path, ini-parsing, io, code, log facilities"
+name = "py"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "1.8.0"
+
+[[package]]
+category = "main"
+description = "Python Game Development"
+name = "pygame"
+optional = false
+python-versions = "*"
+version = "1.9.6"
+
+[[package]]
+category = "dev"
+description = "pytest: simple powerful testing with Python"
+name = "pytest"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "3.10.1"
+
+[package.dependencies]
+atomicwrites = ">=1.0"
+attrs = ">=17.4.0"
+colorama = "*"
+more-itertools = ">=4.0.0"
+pluggy = ">=0.7"
+py = ">=1.5.0"
+setuptools = "*"
+six = ">=1.10.0"
+
+[[package]]
+category = "dev"
+description = "Python 2 and 3 compatibility utilities"
+name = "six"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*"
+version = "1.13.0"
+
+[[package]]
+category = "dev"
+description = "Backport of pathlib-compatible object wrapper for zip files"
+marker = "python_version < \"3.8\""
+name = "zipp"
+optional = false
+python-versions = ">=2.7"
+version = "0.6.0"
+
+[package.dependencies]
+more-itertools = "*"
+
+[metadata]
+content-hash = "174c2d22ef1564d2fda6a41e10b56ae0600efe7c9a021ee2931cd76985294828"
+python-versions = "^3.7"
+
+[metadata.hashes]
+atomicwrites = ["03472c30eb2c5d1ba9227e4c2ca66ab8287fbfbbda3888aa93dc2e28fc6811b4", "75a9445bac02d8d058d5e1fe689654ba5a6556a1dfd8ce6ec55a0ed79866cfa6"]
+attrs = ["08a96c641c3a74e44eb59afb61a24f2cb9f4d7188748e76ba4bb5edfa3cb7d1c", "f7b7ce16570fe9965acd6d30101a28f62fb4a7f9e926b3bbc9b61f8b04247e72"]
+colorama = ["05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d", "f8ac84de7840f5b9c4e3347b3c1eaa50f7e49c2b07596221daec5edaabbd7c48"]
+importlib-metadata = ["aa18d7378b00b40847790e7c27e11673d7fed219354109d0e7b9e5b25dc3ad26", "d5f18a79777f3aa179c145737780282e27b508fc8fd688cb17c7a813e8bd39af"]
+more-itertools = ["409cd48d4db7052af495b09dec721011634af3753ae1ef92d2b32f73a745f832", "92b8c4b06dac4f0611c0729b2f2ede52b2e1bac1ab48f089c7ddc12e26bb60c4"]
+pluggy = ["0db4b7601aae1d35b4a033282da476845aa19185c1e6964b25cf324b5e4ec3e6", "fa5fa1622fa6dd5c030e9cad086fa19ef6a0cf6d7a2d12318e10cb49d6d68f34"]
+py = ["64f65755aee5b381cea27766a3a147c3f15b9b6b9ac88676de66ba2ae36793fa", "dc639b046a6e2cff5bbe40194ad65936d6ba360b52b3c3fe1d08a82dd50b5e53"]
+pygame = ["0480fe82cd41a43e3eea497fa2c059c72ac54cb5d003d5aa2ed06a04541c384e", "136a3b5711d9ec369a0407e4e08ffced3ba61aa41059e9280ffffa79c8614f65", "2622b9dd95f445c887a36a57eade42c672598589f69a8052ccdb8eeeffa4dbb1", "301c6428c0880ecd4a9e3951b80e539c33863b6ff356a443db1758de4f297957", "396320aa29a925feed0b64639f77ce1418722ea7f536b4e4936083dd8d4c4535", "398c42b605ecc514e62f68f1944a2d21e247938309f598de6cb0ad3c207324a8", "4aaff572a273a32e70ec3593d213e59ab11c183a9916616562247930f17a5447", "4e1065577f1b29111113be5deb2ea88553551a5e1cf33e0c08fa32768f285809", "5f052dc2975a399aa1830c1f04c5f72856aa416bf3cd4b31375a058015a5c620", "68ea43e51150316b9fb08e251209d4e2b4e76a340b5b6fc8cdf1a898c78f7e5b", "698433a9fcefca0527244dc44dff9503eb26157494730b1cc80e6e4dbb246e92", "6f714986f7987f10cb94f1be0753318e341a7ea6b12d66f37a4d5d6dd4695023", "73cd9df328c7e72638dbcc1d18e7155225faed880a53db6bad90d1d7c0a71dfd", "7876d1f29f66d3d7cac46479503891ee1ef409b0fbce54b0d74f3a6b33a46dba", "854e87b8b2b76e3ed11d64985fcfdd7af919659503de99fc2b0a717b314c3cf0", "8da13704ad45b7d5de8a8cca135a7f44c7fc6aa9f691abe7b0392468a34a8013", "9ce22fb72298ea33dbb3a1c6c60a4a4e19d9698df6f3f5782eba4dada7b7736d", "a37b6c59e7b8feadc51db5197052b86ceb6443f9fb2a6f7d6527620e707c558c", "a6e8d2f99dbe1dfe72d0c019693c14d93c410f702d0b04ec9a81b36dacd55a23", "a9ac862dd7159861f2c6443b0029089e1c0c4ec762a8074022914ec52fe4dfac", "ae1bc3e78ed28f20878e7ca2c98663a6634e9c00d7746d39413fc18e907dc162", "be7e70f91bd4eb35ae081062f16bf434619b3292358d9b061f8159ddc570c7f0", "c895cf9c1b6d1cbba8cb8cc3f5427febcf8aa41a9333697741abeea1c537a350", "e3e7e4a09dfd8b03663222d6bcadec9fef021404f4d9eecf56825342e039dfc1", "f1f5714d2c23f6a64ef2ac4fcd36a2dd2689da85978d951a99a6ae5dfdf9bdbc", "fa788f775680fc5d268ab00a2da29c9a22830032cfab732730298a2952cd87f3"]
+pytest = ["3f193df1cfe1d1609d4c583838bea3d532b18d6160fd3f55c9447fdca30848ec", "e246cf173c01169b9617fc07264b7b1316e78d7a650055235d6d897bc80d9660"]
+six = ["1f1b7d42e254082a9db6279deae68afb421ceba6158efa6131de7b3003ee93fd", "30f610279e8b2578cab6db20741130331735c781b56053c59c4076da27f06b66"]
+zipp = ["3718b1cbcd963c7d4c5511a8240812904164b7f381b647143a89d3b98f9bcd8e", "f06903e9f1f43b12d371004b4ac7b06ab39a44adc747266928ae6debfa7b3335"]
