@@ -16,8 +16,8 @@ class SaveTheBakery:
             'assets/spaceship.png', 
             [self.screen.get_width() / 2, self.screen.get_height() * .8],
             (60, 80), 
-            3,
-            10
+            5,
+            300
         )
         self.asteroids = []
         self.asteroid_tick = pygame.time.get_ticks()
@@ -32,25 +32,18 @@ class SaveTheBakery:
             self.background.update(self.screen)
             self.generate_asteroids()
             self.player.update(self.screen)
+            self.collide()
 
-            for a in self.asteroids:
-                if a.rect.top < self.screen.get_height():
-                    a.update(self.screen)
-                else:
-                    self.asteroids.remove(a)
-        
-                for b in self.player.bullets:
-                    if b.rect.top < a.rect.top + a.height and a.rect.left < b.rect.left < a.rect.left + a.rect.width :
-                        self.asteroids.remove(a)
-                        self.player.bullets.remove(b)
-            
+            if self.player.life == 0:
+                print(1)
+
             self.clock.tick(120)
             pygame.display.update()
     
     def generate_asteroids(self):
         now = pygame.time.get_ticks()
 
-        if now - self.asteroid_tick > 400:
+        if now - self.asteroid_tick > 800:
             self.asteroid_tick = now
             position = [randint(-25, self.screen.get_width()), -50]
             
@@ -60,8 +53,26 @@ class SaveTheBakery:
                 while last_asteroid.rect.left > position[0] >  last_asteroid.rect.left + last_asteroid.width and last_asteroid.rect.top > 0:
                     position = [randint(-25, self.screen.get_width()), -50]
 
-            size = [randint(30, 70)] * 2
-            self.asteroids.append(Asteroid('assets/asteroid.png', position, size))
+            self.asteroids.append(Asteroid('assets/asteroid.png', position, randint(1, 3)))
+
+    def collide(self):
+        for a in self.asteroids:
+            if a.rect.top < self.screen.get_height():
+                a.update(self.screen)
+            else:
+                self.asteroids.remove(a)
+    
+            for b in self.player.bullets:
+                if b.rect.top < a.rect.top + a.height and a.rect.left < b.rect.left < a.rect.left + a.rect.width :
+                    
+                    a.duration -= 1
+                    if a.duration <= 0:
+                        self.asteroids.remove(a)
+
+                    self.player.bullets.remove(b)
+
+            if a.rect.left < self.player.rect.left < a.rect.left + a.width and self.player.rect.top < a.rect.top + a.height:
+                self.player.life -= 1
 
 if __name__ == '__main__' :
     game = SaveTheBakery()
