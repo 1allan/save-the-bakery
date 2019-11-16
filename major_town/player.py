@@ -16,7 +16,6 @@ class Player:
         self.last_shot = pygame.time.get_ticks()
 
     def move(self, screen, keys):
-
         if keys[pygame.K_w] and self.rect.top > -self.height / 2:
             self.rect.top -= self.speed
         if keys[pygame.K_s] and self.rect.top < screen.get_height() - self.height / 2:
@@ -33,9 +32,9 @@ class Player:
             self.last_shot = now
 
             b = Bullet(
-                './assets/bullet.jpg', 
+                './assets/bullet.png', 
                 [self.rect.left + self.width / 2, self.rect.top + self.height / 2], 
-                [10, 10]
+                [15, 60]
             )
 
             self.bullets.append(b)

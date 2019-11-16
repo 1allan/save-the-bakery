@@ -9,7 +9,7 @@ screen = pygame.display.set_mode((400, 600))
 keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
 
-bg = Background('assets/background.png', [0, 0])
+bg = Background('assets/background.jpg', [0, 0])
 player = Player('assets/spaceship.png', [screen.get_width() / 2, screen.get_height() / 2], (60, 80), 1)
 
 while True:
@@ -17,9 +17,8 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
 
-
-    screen.blit(bg.image, bg.rect)
+    bg.update(screen)
     player.update(screen)
     screen.blit(player.image, player.rect)
-    
+
     pygame.display.update()

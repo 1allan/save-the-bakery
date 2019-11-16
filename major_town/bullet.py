@@ -8,6 +8,11 @@ class Bullet:
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
+        self.width, self.height = size
+
+        #offseting bullet spawn
+        self.rect.left -= self.width / 2
+        self.rect.top -= self.height / 2 
 
     def update(self, screen):
         self.rect.top -= 1
