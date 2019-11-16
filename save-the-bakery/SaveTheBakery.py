@@ -118,7 +118,7 @@ class SaveTheBakery:
             print(self.player.bullets)
         
         elif pw['effect'] == 'bullet_speed':
-            self.player.fire_cadence += 100
+            self.player.fire_cadence -= 50
         
         elif pw['effect'] == 'spaceship_speed':
             self.player.speed += 2

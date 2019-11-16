@@ -31,7 +31,7 @@ class Player:
 
     def shoot(self, screen):
         now = pygame.time.get_ticks()
-
+        
         if now - self.last_shot > self.fire_cadence:
             self.last_shot = now
             bullet_x_pos = [

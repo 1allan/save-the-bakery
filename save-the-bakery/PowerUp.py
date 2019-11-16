@@ -11,9 +11,9 @@ class PowerUp:
         self.rect.left, self.rect.top = location
         self.width, self.height = size
         self.type = choice([
-            {'effect': 'one_more_bullet', 'modifier': 1}, 
-            {'effect': 'bullet_speed', 'modifier': 10},
-            {'effect': 'spaceship_spped', 'modifier': 3}
+            # {'effect': 'one_more_bullet', 'modifier': 1}, 
+            {'effect': 'bullet_speed', 'modifier': 10}
+            # {'effect': 'spaceship_speed', 'modifier': 3}
         ])
 
 
