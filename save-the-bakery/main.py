@@ -1,6 +1,6 @@
 import pygame
-from background import Background
-from player import Player
+from Background import Background
+from Player import Player
 
 pygame.init()
 pygame.display.init()

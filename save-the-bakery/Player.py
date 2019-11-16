@@ -1,6 +1,6 @@
 import pygame
 
-from bullet import Bullet
+from Bullet import Bullet
 
 class Player:
 
