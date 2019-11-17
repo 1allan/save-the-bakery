@@ -81,10 +81,32 @@ class SaveTheBakery:
             else:
                 self.asteroids.remove(a)
             
+            p_y_max = self.player.rect.top
+            p_y_min = self.player.rect.top + self.player.height
+            p_x_min = self.player.rect.left
+            p_x_max = self.player.rect.left + self.player.width
+            
             #if player hits an asteroid
-            if a.rect.left < self.player.rect.left < a.rect.left + a.width and self.player.rect.top < a.rect.top + a.height:
-                self.player.life -= 1
+            if p_x_min <= a.rect.left <= p_x_max:
+                if p_y_max <= a.rect.top <= p_y_min or p_y_max <= a.rect.top + a.rect.height <= p_y_min:
+                    print('morreu')
 
+            if p_x_min <= a.rect.left + a.width <= p_x_max:
+                if p_y_max <= a.rect.top + a.height <= p_y_min or p_y_max <= a.rect.top <= p_y_min:
+                    print('morreu')
+
+            #if player catches a powerup
+            for p in self.powerups:
+                if p_x_min <= p.rect.left <= p_x_max:
+                    if p_y_max <= p.rect.top <= p_y_min or p_y_max <= p.rect.top + p.rect.height <= p_y_min:
+                        self.handle_powerup(p.type)
+                        self.powerups.remove(p)
+                        
+                if p_x_min <= p.rect.left + p.width <= p_x_max:
+                    if p_y_max <= p.rect.top + p.height <= p_y_min or p_y_max <= p.rect.top <= p_y_min:
+                        self.handle_powerup(p.type)
+                        self.powerups.remove(p)
+            
             #if bullet hits an asteroid
             for i in range(len(self.player.bullets)):
                 arr_bullets = self.player.bullets[i]
@@ -103,13 +125,6 @@ class SaveTheBakery:
 
                 if asteroid_is_dead:
                     break
-
-            #if player catches a powerup
-            for p in self.powerups:
-                if self.player.rect.left < p.rect.left < self.player.rect.left + self.player.width and p.rect.top + p.height > self.player.rect.top:
-                   print(p.type)
-                   self.handle_powerup(p.type)
-                   self.powerups.remove(p)
 
     
     def handle_powerup(self, pw):
