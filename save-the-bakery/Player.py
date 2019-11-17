@@ -15,7 +15,7 @@ class Player:
         self.bullets = [[]]
         self.fire_cadence = fire_cadence
         self.last_shot = pygame.time.get_ticks()
-        self.life = 3
+        self.lifes = 3
 
 
     def move(self, screen, keys):

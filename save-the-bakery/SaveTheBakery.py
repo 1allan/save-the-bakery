@@ -39,7 +39,7 @@ class SaveTheBakery:
             self.generate_powerups()
             self.collide()
 
-            if self.player.life == 0:
+            if self.player.lifes == 0:
                 print('Morreu')
 
             self.clock.tick(120)
@@ -85,15 +85,19 @@ class SaveTheBakery:
             p_y_min = self.player.rect.top + self.player.height
             p_x_min = self.player.rect.left
             p_x_max = self.player.rect.left + self.player.width
+            player_hited = False
             
             #if player hits an asteroid
             if p_x_min <= a.rect.left <= p_x_max:
                 if p_y_max <= a.rect.top <= p_y_min or p_y_max <= a.rect.top + a.rect.height <= p_y_min:
-                    print('morreu')
+                    player_hited = True
 
             if p_x_min <= a.rect.left + a.width <= p_x_max:
                 if p_y_max <= a.rect.top + a.height <= p_y_min or p_y_max <= a.rect.top <= p_y_min:
-                    print('morreu')
+                    player_hited = True
+            
+            if player_hited:
+                self.player.lifes -= 1               
 
             #if player catches a powerup
             for p in self.powerups:
@@ -101,11 +105,13 @@ class SaveTheBakery:
                     if p_y_max <= p.rect.top <= p_y_min or p_y_max <= p.rect.top + p.rect.height <= p_y_min:
                         self.handle_powerup(p.type)
                         self.powerups.remove(p)
+                        break
                         
                 if p_x_min <= p.rect.left + p.width <= p_x_max:
                     if p_y_max <= p.rect.top + p.height <= p_y_min or p_y_max <= p.rect.top <= p_y_min:
                         self.handle_powerup(p.type)
                         self.powerups.remove(p)
+                        break
             
             #if bullet hits an asteroid
             for i in range(len(self.player.bullets)):
@@ -115,10 +121,11 @@ class SaveTheBakery:
                 for b in arr_bullets:
                     if a.rect.top + a.height > b.rect.top > a.rect.top and a.rect.left < b.rect.left < a.rect.left + a.rect.width :        
                         a.duration -= 1
+                        arr_bullets.remove(b)
+
                         if a.duration <= 0:
                             self.asteroids.remove(a)
                             asteroid_is_dead = True
-                        arr_bullets.remove(b)
                         
                         if asteroid_is_dead:
                             break
@@ -126,11 +133,10 @@ class SaveTheBakery:
                 if asteroid_is_dead:
                     break
 
-    
+
     def handle_powerup(self, pw):
         if pw['effect'] == 'one_more_bullet' and len(self.player.bullets) < 3:
             self.player.bullets.append([])
-            print(self.player.bullets)
         
         elif pw['effect'] == 'bullet_speed':
             self.player.fire_cadence -= 50
