@@ -10,8 +10,9 @@ class Asteroid(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.location = location
         self.rect.left, self.rect.top = self.location
-        self.width, self.height = [self.size] * 2 
-        self.duration = self.size / 30
+        self.width, self.height = [self.size] * 2
+        self.duration = size
+
 
     def update(self, screen):
         self.rect.top += 1

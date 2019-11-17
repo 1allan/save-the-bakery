@@ -17,7 +17,8 @@ class Background(pygame.sprite.Sprite):
         self.rect2.top = -self.height1
         self.width2 = self.image2.get_width() 
         self.height2 = self.image2.get_height() 
-        
+
+
     def update(self, screen):
         self.rect2.top += 1
         self.rect1.top += 1
