@@ -34,17 +34,26 @@ class Player:
         
         if now - self.last_shot > self.fire_cadence:
             self.last_shot = now
+            
             bullet_x_pos = [
                 [self.rect.left + self.width / 2], 
                 [self.rect.left + 20, self.rect.left + self.width - 20], 
-                [self.rect.left, self.rect.left + self.width / 2, self.rect.left + self.width]
-            ] 
+                [self.rect.left + 5, self.rect.left + self.width / 2, self.rect.left + self.width - 5]
+            ]
+            
+            bullet_y_pos = self.rect.top + self.height / 2
+
             for i in range(1, len(self.bullets) + 1):
+                if len(self.bullets) == 3 and i == 2:
+                    bullet_y_pos -= 50
+                elif i == 3:
+                    bullet_y_pos += 50
+            
                 b = Bullet(
                     './assets/bullet.png', 
-                    [bullet_x_pos[len(self.bullets) - 1][i - 1], self.rect.top + self.height / 2], 
+                    [bullet_x_pos[len(self.bullets) - 1][i - 1], bullet_y_pos], 
                     [15, 60],
-                    30
+                    10
                 )
                 self.bullets[i - 1].append(b)
 
