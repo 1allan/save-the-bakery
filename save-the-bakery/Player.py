@@ -52,7 +52,7 @@ class Player:
                 b = Bullet(
                     './assets/bullet.png', 
                     [bullet_x_pos[len(self.bullets) - 1][i - 1], bullet_y_pos], 
-                    [15, 60],
+                    [10, 50],
                     10
                 )
                 self.bullets[i - 1].append(b)

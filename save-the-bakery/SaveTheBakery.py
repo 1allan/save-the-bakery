@@ -37,10 +37,35 @@ class SaveTheBakery:
             self.generate_asteroids()
             self.player.update(self.screen)
             self.generate_powerups()
-            self.collide()
+            
+            for a in self.asteroids:
+                if a.rect.top < self.screen.get_height():
+                     a.update(self.screen)
+                else:
+                     self.asteroids.remove(a)
+                
+                if self.collide(self.player, a):
+                    if self.player.lifes > 0:
+                        self.player.lifes -= 1
+                    else:
+                        print('DEAD')
 
-            if self.player.lifes == 0:
-                print('Morreu')
+                for i in range(len(self.player.bullets)):
+                    arr_bullets = self.player.bullets[i]
+                    current_a = a
+
+                    for b in arr_bullets:
+                        if self.collide(b, a):
+                            self.asteroids.remove(a)
+                            arr_bullets.remove(b)
+
+                    if current_a not in self.asteroids:
+                        break        
+
+                for p in self.powerups:
+                    if self.collide(self.player, p):
+                        self.handle_powerup(p.type)
+                        self.powerups.remove(p)            
 
             self.clock.tick(120)
             pygame.display.update()
@@ -50,7 +75,7 @@ class SaveTheBakery:
         now = pygame.time.get_ticks()
         if now - self.asteroid_tick > 800:
             self.asteroid_tick = now
-            position = [randint(-25, self.screen.get_width()), -50]
+            position = [randint(-25, self.screen.get_width()), -60]
             
             if len(self.asteroids) > 0:
                 last_asteroid = self.asteroids[len(self.asteroids) - 2]
@@ -73,66 +98,25 @@ class SaveTheBakery:
             p.update(self.screen)
 
 
-    def collide(self):
-        for a in self.asteroids:
-            # if asteroid is out of screen
-            if a.rect.top < self.screen.get_height():
-                a.update(self.screen)
-            else:
-                self.asteroids.remove(a)
+    def collide(self, object1, object2):
+        if object1.width < object2.width:
+           small, big = object1, object2
+        else:
+           small, big = object2, object1
+        
+        big_max_y = big.rect.top
+        big_min_y = big.rect.top + big.height
+        big_min_x = big.rect.left
+        big_max_x = big.rect.left + big.width
+        small_max_y = small.rect.top
+        small_min_y = small.rect.top + small.height
+        small_min_x = small.rect.left
+        small_max_x = small.rect.left + small.width
             
-            p_y_max = self.player.rect.top
-            p_y_min = self.player.rect.top + self.player.height
-            p_x_min = self.player.rect.left
-            p_x_max = self.player.rect.left + self.player.width
-            player_hited = False
-            
-            #if player hits an asteroid
-            if p_x_min <= a.rect.left <= p_x_max:
-                if p_y_max <= a.rect.top <= p_y_min or p_y_max <= a.rect.top + a.rect.height <= p_y_min:
-                    player_hited = True
-
-            if p_x_min <= a.rect.left + a.width <= p_x_max:
-                if p_y_max <= a.rect.top + a.height <= p_y_min or p_y_max <= a.rect.top <= p_y_min:
-                    player_hited = True
-            
-            if player_hited:
-                self.player.lifes -= 1               
-
-            #if player catches a powerup
-            for p in self.powerups:
-                if p_x_min <= p.rect.left <= p_x_max:
-                    if p_y_max <= p.rect.top <= p_y_min or p_y_max <= p.rect.top + p.rect.height <= p_y_min:
-                        self.handle_powerup(p.type)
-                        self.powerups.remove(p)
-                        break
-                        
-                if p_x_min <= p.rect.left + p.width <= p_x_max:
-                    if p_y_max <= p.rect.top + p.height <= p_y_min or p_y_max <= p.rect.top <= p_y_min:
-                        self.handle_powerup(p.type)
-                        self.powerups.remove(p)
-                        break
-            
-            #if bullet hits an asteroid
-            for i in range(len(self.player.bullets)):
-                arr_bullets = self.player.bullets[i]
-                asteroid_is_dead = False
-                
-                for b in arr_bullets:
-                    if a.rect.top + a.height > b.rect.top > a.rect.top and a.rect.left < b.rect.left < a.rect.left + a.rect.width :        
-                        a.duration -= 1
-                        arr_bullets.remove(b)
-
-                        if a.duration <= 0:
-                            self.asteroids.remove(a)
-                            asteroid_is_dead = True
-                        
-                        if asteroid_is_dead:
-                            break
-
-                if asteroid_is_dead:
-                    break
-
+        if big_min_x <= small_min_x <= big_max_x or big_min_x <= small_max_x <= big_max_x:
+            return big_max_y <= small_max_y <= big_min_y or big_max_y <= small_min_y <= big_min_y
+        
+        return False
 
     def handle_powerup(self, pw):
         if pw['effect'] == 'one_more_bullet' and len(self.player.bullets) < 3:
