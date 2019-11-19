@@ -4,7 +4,7 @@ from config import (
 PLAYER_IMAGE,
 PLAYER_SIZE, 
 PLAYER_LIFES, 
-PLAYER_LOCATION, 
+PLAYER_POSITION, 
 PLAYER_SPEED,
 PLAYER_FIRE_CADENCE,
 PLAYER_BULLETS,
@@ -16,12 +16,12 @@ from Bullet import Bullet
 
 class Player:
 
-    def __init__(self, screen, location=PLAYER_LOCATION, size=PLAYER_SIZE, speed=PLAYER_SPEED, fire_cadence=PLAYER_FIRE_CADENCE, image_file=PLAYER_IMAGE):
+    def __init__(self, screen, position=PLAYER_POSITION, size=PLAYER_SIZE, speed=PLAYER_SPEED, fire_cadence=PLAYER_FIRE_CADENCE, image_file=PLAYER_IMAGE):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image_file)
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = location
+        self.rect.left, self.rect.top = position
         self.width, self.height = size
         self.screen = screen
         self.speed = speed

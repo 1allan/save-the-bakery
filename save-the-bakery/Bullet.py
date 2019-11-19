@@ -4,12 +4,12 @@ from config import BULLET_IMAGE
 
 class Bullet: 
 
-    def __init__(self, location, size, speed, image_file=BULLET_IMAGE, ):
+    def __init__(self, position, size, speed, image_file=BULLET_IMAGE, ):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image_file).convert()
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = location
+        self.rect.left, self.rect.top = position
         self.width, self.height = size
         self.speed = speed
 

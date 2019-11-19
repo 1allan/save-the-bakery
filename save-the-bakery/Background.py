@@ -1,8 +1,10 @@
 import pygame
 
+from config import BACKGROUND_IMAGE, BACKGROUND_POSITION
+
 class Background(pygame.sprite.Sprite):
     
-    def __init__(self, screen, image_file='assets/background.jpg', location=[0, 0]):
+    def __init__(self, screen, image_file=BACKGROUND_IMAGE, position=BACKGROUND_POSITION):
         pygame.sprite.Sprite.__init__(self)
         self.image1 = pygame.image.load(image_file).convert()
         self.rect1 = self.image1.get_rect()

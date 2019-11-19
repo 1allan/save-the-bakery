@@ -4,15 +4,21 @@ from random import randint
 RESOLUTION = (400, 600)
 CLOCK = 120
 
+
 #Entity generation
 ASTEROID_GEN_INTERVAL = 800
-POWERUP_GEN_INTERVAL = 5000
+POWERUP_GEN_INTERVAL = 0
+POWERUP_ON_KILL_CHANCE = 10
 
 #Images
+BACKGROUND_IMAGE = 'assets/background.jpg'
 ASTEROID_IMAGE = 'assets/asteroid.png'
 POWERUP_IMAGE = 'assets/cake.png'
 BULLET_IMAGE = 'assets/bullet.png'
 PLAYER_IMAGE = 'assets/spaceship.png'
+
+#Background
+BACKGROUND_POSITION = [0, 0]
 
 #Asteroids
 ASTEROID_SIZE_RANGE = (1, 3)
@@ -22,12 +28,12 @@ POWERUP_SIZE = (30, 30)
 POWERUP_LIST = [
     {'effect': 'one_more_bullet', 'modifier': 1}, 
     {'effect': 'fire_cadence', 'modifier': 10},
-    {'effect': 'spaceship_speed', 'modifier': 3}
+    {'effect': 'spaceship_speed', 'modifier': 2}
 ]
 
 #Player
 PLAYER_SIZE = (60, 80)
-PLAYER_LOCATION = [RESOLUTION[0] / 2, RESOLUTION[1] * .85]
+PLAYER_POSITION = [RESOLUTION[0] / 2, RESOLUTION[1] * .85]
 PLAYER_LIFES = 3
 PLAYER_SPEED = 2
 PLAYER_MAX_SPEED = 8
@@ -38,9 +44,9 @@ PLAYER_BULLET_SIZE = [10, 50]
 PLAYER_FIRE_CADENCE = 600
 PLAYER_MAX_FIRE_CADENCE = 1000
 PLAYER_BULLET_X_POS = [
-    [PLAYER_LOCATION[0] + PLAYER_SIZE[0] / 2], 
-    [PLAYER_LOCATION[0] + 20, PLAYER_LOCATION[0] + PLAYER_SIZE[0] - 20], 
-    [PLAYER_LOCATION[0] + 10, PLAYER_LOCATION[0] + PLAYER_SIZE[0] / 2, PLAYER_LOCATION[0] + PLAYER_SIZE[0] - 10]
+    [PLAYER_POSITION[0] + PLAYER_SIZE[0] / 2], 
+    [PLAYER_POSITION[0] + 20, PLAYER_POSITION[0] + PLAYER_SIZE[0] - 20], 
+    [PLAYER_POSITION[0] + 10, PLAYER_POSITION[0] + PLAYER_SIZE[0] / 2, PLAYER_POSITION[0] + PLAYER_SIZE[0] - 10]
 ]
-PLAYER_BULLET_Y_POS = PLAYER_LOCATION[1] + PLAYER_SIZE[1] / 2
+PLAYER_BULLET_Y_POS = PLAYER_POSITION[1] + PLAYER_SIZE[1] / 2
 

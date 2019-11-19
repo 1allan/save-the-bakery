@@ -6,6 +6,7 @@ RESOLUTION,
 CLOCK, 
 ASTEROID_GEN_INTERVAL, 
 POWERUP_GEN_INTERVAL,
+POWERUP_ON_KILL_CHANCE,
 PLAYER_MAX_BULLETS,
 PLAYER_MAX_SPEED,
 PLAYER_MAX_FIRE_CADENCE
@@ -21,17 +22,16 @@ class SaveTheBakery:
     def __init__(self):
         pygame.init()
         pygame.display.init()
+        pygame.display.set_caption('Save The Bakery')
         self.clock = pygame.time.Clock()
         self.screen_width, self.screen_height = RESOLUTION
         self.screen = pygame.display.set_mode(RESOLUTION)
         self.background = Background(screen=self.screen)
         self.player = Player(self.screen)
         self.asteroids = []
-        self.asteroid_tick = pygame.time.get_ticks()
-        self.asteroid_interval = ASTEROID_GEN_INTERVAL
         self.powerups = []
+        self.asteroid_tick = pygame.time.get_ticks()
         self.powerup_tick = pygame.time.get_ticks()
-        self.powerup_interval = POWERUP_GEN_INTERVAL
 
     def main(self):
         while True:
@@ -63,6 +63,7 @@ class SaveTheBakery:
 
                     for b in arr_bullets:
                         if self.collide(b, a):
+                            self.generate_powerups((a.rect.left, a.rect.top))
                             self.asteroids.remove(a)
                             arr_bullets.remove(b)
 
@@ -101,7 +102,7 @@ class SaveTheBakery:
     
     def generate_asteroids(self):
         now = pygame.time.get_ticks()
-        if now - self.asteroid_tick > self.asteroid_interval:
+        if now - self.asteroid_tick > ASTEROID_GEN_INTERVAL:
             self.asteroid_tick = now
             position = [randint(0, self.screen_width), -60]
             
@@ -117,14 +118,19 @@ class SaveTheBakery:
             self.asteroids.append(Asteroid(position))
 
 
-    def generate_powerups(self):
-        now = pygame.time.get_ticks()
-        if now - self.powerup_tick > self.powerup_interval:
-            self.powerup_tick = now
+    def generate_powerups(self, asteroid_pos=False):
+        if not asteroid_pos and POWERUP_GEN_INTERVAL > 0:
+            now = pygame.time.get_ticks()
 
-            position = [randint(0, self.screen_width), -50] 
-            self.powerups.append(PowerUp(position))
+            if now - self.powerup_tick > POWERUP_GEN_INTERVAL:
+                
+                self.powerup_tick = now
+                position = [randint(0, self.screen_width), -50] 
+                self.powerups.append(PowerUp(position))
         
+        elif asteroid_pos and randint(0, 100) < POWERUP_ON_KILL_CHANCE:
+            self.powerups.append(PowerUp(asteroid_pos))
+
         for p in self.powerups:
             p.update(self.screen)
 
