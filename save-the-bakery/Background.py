@@ -2,7 +2,7 @@ import pygame
 
 class Background(pygame.sprite.Sprite):
     
-    def __init__(self, image_file, location):
+    def __init__(self, image_file, screen, location=[0, 0]):
         pygame.sprite.Sprite.__init__(self)
         self.image1 = pygame.image.load(image_file).convert()
         self.rect1 = self.image1.get_rect()
@@ -17,19 +17,21 @@ class Background(pygame.sprite.Sprite):
         self.rect2.left = 0
         self.rect2.top = -self.height1
         self.width2 = self.image2.get_width() 
-        self.height2 = self.image2.get_height() 
+        self.height2 = self.image2.get_height()
+
+        self.screen = screen
 
 
-    def update(self, screen):
+    def update(self):
         self.rect2.top += 1
         self.rect1.top += 1
 
-        if self.rect1.top >= screen.get_height():
+        if self.rect1.top >= self.screen.get_height():
             self.rect1.top = -self.height1
             
-        if self.rect2.top >= screen.get_height():
+        if self.rect2.top >= self.screen.get_height():
             self.rect2.top = -self.height2
         
-        screen.blit(self.image1, self.rect1)
-        screen.blit(self.image2, self.rect2)
+        self.screen.blit(self.image1, self.rect1)
+        self.screen.blit(self.image2, self.rect2)
         

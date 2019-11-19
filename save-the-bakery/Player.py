@@ -4,13 +4,14 @@ from Bullet import Bullet
 
 class Player:
 
-    def __init__(self, image_file, location, size, speed, fire_cadence):
+    def __init__(self, image_file, screen, location, size, speed, fire_cadence):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image_file)
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
         self.width, self.height = size
+        self.screen = screen
         self.speed = speed
         self.bullets = [[]]
         self.fire_cadence = fire_cadence
@@ -18,18 +19,18 @@ class Player:
         self.lifes = 3
 
 
-    def move(self, screen, keys):
-        if keys[pygame.K_w] and self.rect.top > -self.height / 2:
+    def move(self, keys):
+        if (keys[pygame.K_w] or keys[pygame.K_UP]) and self.rect.top > -self.height / 2:
             self.rect.top -= self.speed
-        if keys[pygame.K_s] and self.rect.top < screen.get_height() - self.height / 2:
+        if (keys[pygame.K_s] or keys[pygame.K_DOWN]) and self.rect.top < self.screen.get_height() - self.height / 2:
             self.rect.top += self.speed
-        if keys[pygame.K_a] and self.rect.left > -self.width / 2:
+        if (keys[pygame.K_a] or keys[pygame.K_LEFT]) and self.rect.left > -self.width / 2:
             self.rect.left -= self.speed
-        if keys[pygame.K_d] and self.rect.left < screen.get_width() - self.width / 2:
+        if (keys[pygame.K_d] or keys[pygame.K_RIGHT]) and self.rect.left < self.screen.get_width() - self.width / 2:
             self.rect.left += self.speed
 
 
-    def shoot(self, screen):
+    def shoot(self):
         now = pygame.time.get_ticks()
         
         if now - self.last_shot > self.fire_cadence:
@@ -59,18 +60,18 @@ class Player:
 
     
     
-    def update(self, screen):
+    def update(self):
         keys = pygame.key.get_pressed()
         
         if keys[pygame.K_SPACE]:
-            self.shoot(screen)
-        
+            self.shoot()
+
         for i in range(len(self.bullets)):
             for b in self.bullets[i]:
                 if b.rect.top < 0 :
                     self.bullets[i].remove(b) 
     
-                b.update(screen)
+                b.update(self.screen)
         
-        self.move(screen, keys)
-        screen.blit(self.image, self.rect)
+        self.move(keys)
+        self.screen.blit(self.image, self.rect)
