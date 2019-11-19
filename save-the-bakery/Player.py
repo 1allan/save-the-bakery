@@ -1,10 +1,22 @@
 import pygame
 
+from config import (
+PLAYER_IMAGE,
+PLAYER_SIZE, 
+PLAYER_LIFES, 
+PLAYER_LOCATION, 
+PLAYER_SPEED,
+PLAYER_FIRE_CADENCE,
+PLAYER_BULLETS,
+PLAYER_BULLET_SPEED,
+PLAYER_BULLET_SIZE
+)
+
 from Bullet import Bullet
 
 class Player:
 
-    def __init__(self, image_file, screen, location, size, speed, fire_cadence):
+    def __init__(self, screen, location=PLAYER_LOCATION, size=PLAYER_SIZE, speed=PLAYER_SPEED, fire_cadence=PLAYER_FIRE_CADENCE, image_file=PLAYER_IMAGE):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image_file)
         self.image = pygame.transform.scale(self.image, size)
@@ -13,10 +25,10 @@ class Player:
         self.width, self.height = size
         self.screen = screen
         self.speed = speed
-        self.bullets = [[]]
+        self.bullets = PLAYER_BULLETS
         self.fire_cadence = fire_cadence
         self.last_shot = pygame.time.get_ticks()
-        self.lifes = 3
+        self.lifes = PLAYER_LIFES
 
 
     def move(self, keys):
@@ -51,10 +63,9 @@ class Player:
                     bullet_y_pos += 50
             
                 b = Bullet(
-                    './assets/bullet.png', 
                     [bullet_x_pos[len(self.bullets) - 1][i - 1], bullet_y_pos], 
-                    [10, 50],
-                    10
+                    PLAYER_BULLET_SIZE,
+                    PLAYER_BULLET_SPEED
                 )
                 self.bullets[i - 1].append(b)
 

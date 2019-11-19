@@ -1,8 +1,10 @@
 import pygame
 
+from config import BULLET_IMAGE
+
 class Bullet: 
 
-    def __init__(self, image_file, location, size, speed):
+    def __init__(self, location, size, speed, image_file=BULLET_IMAGE, ):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image_file).convert()
         self.image = pygame.transform.scale(self.image, size)

@@ -1,6 +1,16 @@
 import pygame
 from random import randint
 
+from config import (
+RESOLUTION, 
+CLOCK, 
+ASTEROID_GEN_INTERVAL, 
+POWERUP_GEN_INTERVAL,
+PLAYER_MAX_BULLETS,
+PLAYER_MAX_SPEED,
+PLAYER_MAX_FIRE_CADENCE
+)
+
 from Background import Background
 from Player import Player
 from Asteroid import Asteroid
@@ -8,26 +18,20 @@ from PowerUp import PowerUp
 
 class SaveTheBakery:
     
-    def __init__(self, resolution=(400, 600)):
+    def __init__(self):
         pygame.init()
         pygame.display.init()
         self.clock = pygame.time.Clock()
-        self.screen_width, self.screen_height = resolution
-        self.screen = pygame.display.set_mode(resolution)
-        self.background = Background('assets/background.jpg', self.screen)
-        self.player = Player(
-            'assets/spaceship.png',
-            self.screen, 
-            [self.screen_width / 2, self.screen_height * .82],
-            (60, 80), 
-            5,
-            300
-        )
-        self.gui = GUI(self.screen)
+        self.screen_width, self.screen_height = RESOLUTION
+        self.screen = pygame.display.set_mode(RESOLUTION)
+        self.background = Background(screen=self.screen)
+        self.player = Player(self.screen)
         self.asteroids = []
         self.asteroid_tick = pygame.time.get_ticks()
-        self.powerup_tick = pygame.time.get_ticks()
+        self.asteroid_interval = ASTEROID_GEN_INTERVAL
         self.powerups = []
+        self.powerup_tick = pygame.time.get_ticks()
+        self.powerup_interval = POWERUP_GEN_INTERVAL
 
     def main(self):
         while True:
@@ -73,7 +77,7 @@ class SaveTheBakery:
                     if p.rect.top > self.screen_height:
                         self.powerups.remove(p)            
 
-            self.clock.tick(120)
+            self.clock.tick(CLOCK)
             pygame.display.update()
 
     
@@ -97,9 +101,9 @@ class SaveTheBakery:
     
     def generate_asteroids(self):
         now = pygame.time.get_ticks()
-        if now - self.asteroid_tick > 800:
+        if now - self.asteroid_tick > self.asteroid_interval:
             self.asteroid_tick = now
-            position = [randint(-25, self.screen_width), -60]
+            position = [randint(0, self.screen_width), -60]
             
             if len(self.asteroids) > 0:
                 last_asteroid = self.asteroids[len(self.asteroids) - 2]
@@ -108,31 +112,31 @@ class SaveTheBakery:
                     last_asteroid.rect.left > position[0] > 
                     last_asteroid.rect.left + last_asteroid.width and last_asteroid.rect.top > 0
                 ):
-                    position = [randint(-25, self.screen_width), -50]
+                    position = [randint(0, self.screen_width), -60]
 
-            self.asteroids.append(Asteroid('assets/asteroid.png', position, randint(1, 3)))
+            self.asteroids.append(Asteroid(position))
 
 
     def generate_powerups(self):
         now = pygame.time.get_ticks()
-        if now - self.powerup_tick > 1800:
+        if now - self.powerup_tick > self.powerup_interval:
             self.powerup_tick = now
 
             position = [randint(0, self.screen_width), -50] 
-            self.powerups.append(PowerUp('assets/cake.png', position, (30, 30)))
+            self.powerups.append(PowerUp(position))
         
         for p in self.powerups:
             p.update(self.screen)
 
 
     def handle_powerup(self, pw):
-        if pw['effect'] == 'one_more_bullet' and len(self.player.bullets) < 3:
+        if pw['effect'] == 'one_more_bullet' and len(self.player.bullets) < PLAYER_MAX_BULLETS:
             self.player.bullets.append([])
         
-        elif pw['effect'] == 'bullet_speed':
+        elif pw['effect'] == 'fire_cadence' and self.player.fire_cadence > PLAYER_MAX_FIRE_CADENCE:
             self.player.fire_cadence -= 50
         
-        elif pw['effect'] == 'spaceship_speed':
+        elif pw['effect'] == 'spaceship_speed' and self.player.speed < PLAYER_MAX_SPEED:
             self.player.speed += 2
 
 
