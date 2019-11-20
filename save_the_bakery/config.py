@@ -7,8 +7,8 @@ CLOCK = 120
 
 #Entity generation
 ASTEROID_GEN_INTERVAL = 800
-POWERUP_GEN_INTERVAL = 0
-POWERUP_ON_KILL_CHANCE = 10
+POWERUP_GEN_INTERVAL =  0 #set 0 to deactivate
+POWERUP_ON_KILL_CHANCE = 20
 
 #Images
 BACKGROUND_IMAGE = 'assets/background.jpg'
@@ -26,7 +26,7 @@ ASTEROID_SIZE_RANGE = (1, 3)
 #Powerups
 POWERUP_SIZE = (30, 30)
 POWERUP_LIST = [
-    {'effect': 'one_more_bullet', 'modifier': 1}, 
+    {'effect': 'one_more_bullet', 'modifier': []}, 
     {'effect': 'fire_cadence', 'modifier': 10},
     {'effect': 'spaceship_speed', 'modifier': 2}
 ]

@@ -137,15 +137,16 @@ class SaveTheBakery:
 
     def handle_powerup(self, pw):
         if pw['effect'] == 'one_more_bullet' and len(self.player.bullets) < PLAYER_MAX_BULLETS:
-            self.player.bullets.append([])
+            self.player.bullets.append(pw['modifier'])
         
         elif pw['effect'] == 'fire_cadence' and self.player.fire_cadence > PLAYER_MAX_FIRE_CADENCE:
-            self.player.fire_cadence -= 50
+            self.player.fire_cadence -= pw['modifier']
         
         elif pw['effect'] == 'spaceship_speed' and self.player.speed < PLAYER_MAX_SPEED:
-            self.player.speed += 2
-
+            self.player.speed += pw['modifier']
+    
 
 if __name__ == '__main__' :
+    print('Debug mode')
     game = SaveTheBakery()
     game.main()
