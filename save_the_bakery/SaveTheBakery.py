@@ -57,9 +57,9 @@ class SaveTheBakery:
                     else:
                         print('DEAD')
 
+                current_a = a
                 for i in range(len(self.player.bullets)):
                     arr_bullets = self.player.bullets[i]
-                    current_a = a
 
                     for b in arr_bullets:
                         if self.collide(b, a):
@@ -137,7 +137,7 @@ class SaveTheBakery:
 
     def handle_powerup(self, pw):
         if pw['effect'] == 'one_more_bullet' and len(self.player.bullets) < PLAYER_MAX_BULLETS:
-            self.player.bullets.append(pw['modifier'])
+            self.player.bullets = [[]] * pw['modifier']
         
         elif pw['effect'] == 'fire_cadence' and self.player.fire_cadence > PLAYER_MAX_FIRE_CADENCE:
             self.player.fire_cadence -= pw['modifier']
