@@ -1,15 +1,16 @@
 import pygame
-from random import randint
+from random import randint, choice
 
 from config import (
-RESOLUTION, 
-CLOCK, 
-ASTEROID_GEN_INTERVAL, 
-POWERUP_GEN_INTERVAL,
-POWERUP_ON_KILL_CHANCE,
-PLAYER_MAX_BULLETS,
-PLAYER_MAX_SPEED,
-PLAYER_MAX_FIRE_CADENCE
+    RESOLUTION, 
+    CLOCK, 
+    ASTEROID_GEN_INTERVAL, 
+    SPECIAL_ASTEROIDS,
+    POWERUP_GEN_INTERVAL,
+    POWERUP_ON_KILL_CHANCE,
+    PLAYER_MAX_BULLETS,
+    PLAYER_MAX_SPEED,
+    PLAYER_MAX_FIRE_CADENCE
 )
 
 from Background import Background
@@ -114,9 +115,12 @@ class SaveTheBakery:
                     last_asteroid.rect.left + last_asteroid.width and last_asteroid.rect.top > 0
                 ):
                     position = [randint(0, self.screen_width), -60]
-
-            self.asteroids.append(Asteroid(position))
-
+            
+            sp_asteroid = choice(SPECIAL_ASTEROIDS)
+            if randint(0, 100) < sp_asteroid['chance']:
+                self.asteroids.append(sp_asteroid['class'](position))
+            else:
+                self.asteroids.append(Asteroid(position))
 
     def generate_powerups(self, asteroid_pos=False):
         if not asteroid_pos and POWERUP_GEN_INTERVAL > 0:
@@ -144,9 +148,3 @@ class SaveTheBakery:
         
         elif pw['effect'] == 'spaceship_speed' and self.player.speed < PLAYER_MAX_SPEED:
             self.player.speed += pw['modifier']
-    
-
-if __name__ == '__main__' :
-    print('Debug mode')
-    game = SaveTheBakery()
-    game.main()

@@ -1,5 +1,7 @@
 from random import randint
 
+from DeathStar import DeathStar
+
 #General
 RESOLUTION = (400, 600)
 CLOCK = 120
@@ -7,8 +9,16 @@ CLOCK = 120
 
 #Entity generation
 ASTEROID_GEN_INTERVAL = 800
+SPECIAL_ASTEROIDS = [
+    {'class': Deathstar, 'chance': 100}
+]
 POWERUP_GEN_INTERVAL =  0 #set 0 to deactivate
 POWERUP_ON_KILL_CHANCE = 20
+POWERUPS_CHANCE = {
+    'one_more_bullet': 33,
+    'fire_cadence': 33,
+    'spaceship_speed': 33
+}
 
 #Images
 BACKGROUND_IMAGE = 'assets/background.jpg'
