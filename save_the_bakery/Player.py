@@ -7,7 +7,7 @@ from config import (
     PLAYER_POSITION, 
     PLAYER_SPEED,
     PLAYER_FIRE_CADENCE,
-    PLAYER_BULLETS,
+    PLAYER_BULLET_LINES,
     PLAYER_BULLET_SPEED,
     PLAYER_BULLET_SIZE
 )
@@ -25,7 +25,8 @@ class Player:
         self.width, self.height = size
         self.screen = screen
         self.speed = speed
-        self.bullets = PLAYER_BULLETS
+        self.bullets = []
+        self.bullet_lines = PLAYER_BULLET_LINES
         self.fire_cadence = fire_cadence
         self.last_shot = pygame.time.get_ticks()
         self.lifes = PLAYER_LIFES
@@ -56,18 +57,18 @@ class Player:
             
             bullet_y_pos = self.rect.top + self.height / 2
 
-            for i in range(1, len(self.bullets) + 1):
-                if len(self.bullets) == 3 and i == 2:
+            for i in range(self.bullet_lines):
+                if self.bullet_lines == 3 and i == 1:
                     bullet_y_pos -= 50
-                elif i == 3:
+                else:
                     bullet_y_pos += 50
             
                 b = Bullet(
-                    [bullet_x_pos[len(self.bullets) - 1][i - 1], bullet_y_pos], 
+                    [bullet_x_pos[self.bullet_lines - 1][i], bullet_y_pos], 
                     PLAYER_BULLET_SIZE,
                     PLAYER_BULLET_SPEED
                 )
-                self.bullets[i - 1].append(b)
+                self.bullets.append(b)
 
     
     
@@ -76,13 +77,6 @@ class Player:
         
         if keys[pygame.K_SPACE]:
             self.shoot()
-
-        for i in range(len(self.bullets)):
-            for b in self.bullets[i]:
-                if b.rect.top < 0 :
-                    self.bullets[i].remove(b) 
-    
-                b.update(self.screen)
         
         self.move(keys)
         self.screen.blit(self.image, self.rect)

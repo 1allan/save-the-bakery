@@ -16,6 +16,7 @@ from config import (
 from Background import Background
 from Player import Player
 from Asteroid import Asteroid
+from DeathStar import DeathStar
 from PowerUp import PowerUp
 
 class SaveTheBakery:
@@ -31,26 +32,38 @@ class SaveTheBakery:
         self.player = Player(self.screen)
         self.asteroids = []
         self.powerups = []
+        self.all_bullets = []
         self.asteroid_tick = pygame.time.get_ticks()
         self.powerup_tick = pygame.time.get_ticks()
 
+
     def main(self):
         while True:
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
 
-            self.background.update()
+            self.background.update()    
+            
+            for b in self.all_bullets:
+                b.update(self.screen)
+                if -100 < b.rect.top < RESOLUTION[1] + 100:
+                    self.all_bullets.remove(b)
+            
             self.player.update()
             self.generate_asteroids()
             self.generate_powerups()
+
+            self.all_bullets += self.player.bullets
 
             for a in self.asteroids:
                 if a.rect.top < self.screen_height:
                     a.update(self.screen)
                 else:
                     self.asteroids.remove(a)
+                
+                if type(a) is DeathStar:
+                    self.all_bullets += a.bullets
                 
                 if self.collide(self.player, a):
                     if self.player.lifes > 0:
@@ -59,15 +72,12 @@ class SaveTheBakery:
                         print('DEAD')
 
                 current_a = a
-                for i in range(len(self.player.bullets)):
-                    arr_bullets = self.player.bullets[i]
-
-                    for b in arr_bullets:
-                        if self.collide(b, a):
-                            self.generate_powerups((a.rect.left, a.rect.top))
-                            self.asteroids.remove(a)
-                            arr_bullets.remove(b)
-
+                for b in self.player.bullets:
+                    if self.collide(b, a):
+                        self.generate_powerups((a.rect.left, a.rect.top))
+                        self.asteroids.remove(a)
+                        self.player.bullets.remove(b)
+                        
                     if current_a not in self.asteroids:
                         break        
 
@@ -100,7 +110,8 @@ class SaveTheBakery:
             
         if big_min_x <= small_min_x <= big_max_x or big_min_x <= small_max_x <= big_max_x:
             return big_max_y <= small_max_y <= big_min_y or big_max_y <= small_min_y <= big_min_y
-    
+
+
     def generate_asteroids(self):
         now = pygame.time.get_ticks()
         if now - self.asteroid_tick > ASTEROID_GEN_INTERVAL:
@@ -118,9 +129,11 @@ class SaveTheBakery:
             
             sp_asteroid = choice(SPECIAL_ASTEROIDS)
             if randint(0, 100) < sp_asteroid['chance']:
-                self.asteroids.append(sp_asteroid['class'](position))
+                if sp_asteroid['name'] == 'deathstar':
+                    self.asteroids.append(DeathStar(position))
             else:
                 self.asteroids.append(Asteroid(position))
+
 
     def generate_powerups(self, asteroid_pos=False):
         if not asteroid_pos and POWERUP_GEN_INTERVAL > 0:
@@ -140,8 +153,8 @@ class SaveTheBakery:
 
 
     def handle_powerup(self, pw):
-        if pw['effect'] == 'one_more_bullet' and len(self.player.bullets) < PLAYER_MAX_BULLETS:
-            self.player.bullets = [[]] * pw['modifier']
+        if pw['effect'] == 'one_more_bullet' and self.player.bullet_lines < PLAYER_MAX_BULLETS:
+            self.player.bullet_lines += pw['modifier']
         
         elif pw['effect'] == 'fire_cadence' and self.player.fire_cadence > PLAYER_MAX_FIRE_CADENCE:
             self.player.fire_cadence -= pw['modifier']

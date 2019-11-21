@@ -1,19 +1,17 @@
 from random import randint
 
-from DeathStar import DeathStar
-
 #General
 RESOLUTION = (400, 600)
 CLOCK = 120
 
 
 #Entity generation
-ASTEROID_GEN_INTERVAL = 800
+ASTEROID_GEN_INTERVAL = 600
 SPECIAL_ASTEROIDS = [
-    {'class': Deathstar, 'chance': 100}
+    {'name': 'deathstar', 'chance': 10}
 ]
 POWERUP_GEN_INTERVAL =  0 #set 0 to deactivate
-POWERUP_ON_KILL_CHANCE = 20
+POWERUP_ON_KILL_CHANCE = 30
 POWERUPS_CHANCE = {
     'one_more_bullet': 33,
     'fire_cadence': 33,
@@ -32,11 +30,12 @@ BACKGROUND_POSITION = [0, 0]
 
 #Asteroids
 ASTEROID_SIZE_RANGE = (1, 3)
+ASTEROID_SPEED_RANGE = (2, 4)
 
 #Powerups
 POWERUP_SIZE = (30, 30)
 POWERUP_LIST = [
-    {'effect': 'one_more_bullet', 'modifier': 3}, 
+    {'effect': 'one_more_bullet', 'modifier': 1} 
     {'effect': 'fire_cadence', 'modifier': 10},
     {'effect': 'spaceship_speed', 'modifier': 2}
 ]
@@ -45,9 +44,9 @@ POWERUP_LIST = [
 PLAYER_SIZE = (60, 80)
 PLAYER_POSITION = [RESOLUTION[0] / 2, RESOLUTION[1] * .85]
 PLAYER_LIFES = 3
-PLAYER_SPEED = 2
+PLAYER_SPEED = 3
 PLAYER_MAX_SPEED = 8
-PLAYER_BULLETS = [[]]
+PLAYER_BULLET_LINES = 1
 PLAYER_BULLET_SPEED = 10
 PLAYER_MAX_BULLETS = 3
 PLAYER_BULLET_SIZE = [10, 50] 
