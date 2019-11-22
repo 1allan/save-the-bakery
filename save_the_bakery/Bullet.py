@@ -4,7 +4,7 @@ from config import BULLET_IMAGE
 
 class Bullet: 
 
-    def __init__(self, position, size, speed, direction=1, image_file=BULLET_IMAGE, ):
+    def __init__(self, position, size, speed, shooter, direction=1, image_file=BULLET_IMAGE):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image_file).convert()
         self.image = pygame.transform.scale(self.image, size)
@@ -13,6 +13,7 @@ class Bullet:
         self.width, self.height = size
         self.speed = speed
         self.direction = direction
+        self.shooter = shooter
 
         self.rect.left -= self.width / 2
         self.rect.top -= self.height / 2 

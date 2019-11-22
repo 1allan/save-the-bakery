@@ -47,7 +47,9 @@ class SaveTheBakery:
             
             for b in self.all_bullets:
                 b.update(self.screen)
-                if -100 < b.rect.top < RESOLUTION[1] + 100:
+                if b.shooter not in self.asteroids:
+                    self.all_bullets.remove(b)
+                elif -100 < b.rect.top < RESOLUTION[1] + 100:
                     self.all_bullets.remove(b)
             
             self.player.update()

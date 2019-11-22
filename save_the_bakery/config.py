@@ -35,7 +35,7 @@ ASTEROID_SPEED_RANGE = (2, 4)
 #Powerups
 POWERUP_SIZE = (30, 30)
 POWERUP_LIST = [
-    {'effect': 'one_more_bullet', 'modifier': 1} 
+    {'effect': 'one_more_bullet', 'modifier': 1},
     {'effect': 'fire_cadence', 'modifier': 10},
     {'effect': 'spaceship_speed', 'modifier': 2}
 ]

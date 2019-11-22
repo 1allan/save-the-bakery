@@ -58,15 +58,17 @@ class Player:
             bullet_y_pos = self.rect.top + self.height / 2
 
             for i in range(self.bullet_lines):
-                if self.bullet_lines == 3 and i == 1:
-                    bullet_y_pos -= 50
-                else:
-                    bullet_y_pos += 50
+                if self.bullet_lines == 3:
+                    if i == 3:
+                        bullet_y_pos -= 50
+                    else:
+                        bullet_y_pos += 50
             
                 b = Bullet(
                     [bullet_x_pos[self.bullet_lines - 1][i], bullet_y_pos], 
                     PLAYER_BULLET_SIZE,
-                    PLAYER_BULLET_SPEED
+                    PLAYER_BULLET_SPEED,
+                    Player
                 )
                 self.bullets.append(b)
 

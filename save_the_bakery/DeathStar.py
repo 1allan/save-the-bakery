@@ -25,6 +25,7 @@ class DeathStar(Asteroid):
                 [self.rect.left + self.width / 2, self.rect.top + self.height / 2],
                 (15, 40),
                 8,
+                DeathStar,
                 -1
             ))
 
