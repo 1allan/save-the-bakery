@@ -84,6 +84,7 @@ class Player:
             if now - self.last_damage > 1000 or self.hp == PLAYER_HP:
                 self.last_damage = now
                 self.hp += quantity
+                self.invencible = True
         else:
             self.hp += quantity
         
@@ -91,4 +92,13 @@ class Player:
 
     
     def update(self):
-        self.screen.blit(self.image, self.rect)
+        now = pygame.time.get_ticks()
+        image = self.image
+        rect = self.rect
+
+        if self.invencible and now - self.last_damage < 1000:
+            image = pygame.image.load('assets/spaceshipdamaged.png')
+            image = pygame.transform.scale(image, self.size)
+            rect = image.get_rect()
+        
+        self.screen.blit(image, (self.rect.left, self.rect.top))

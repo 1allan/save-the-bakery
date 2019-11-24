@@ -71,6 +71,16 @@ class SaveTheBakery:
                 self.all_bullets.remove(b)
             elif -100 < b.rect.top < RESOLUTION[1] + 100:
                 self.all_bullets.remove(b)
+            
+            if b.shooter == DeathStar and self.collide(b, self.player):
+                self.player.handle_hp()
+                self.hud.change(hp=self.player.hp)
+                self.animations.append(Animation(
+                    self.screen, 
+                    'explosion', 
+                    (self.player.rect.left, 
+                    self.player.rect.top)
+                ))
         
         self.all_bullets += self.player.bullets
 
@@ -108,13 +118,13 @@ class SaveTheBakery:
                 if current_a not in self.asteroids:
                     break        
 
-            for p in self.powerups:
-                if self.collide(self.player, p):
-                    self.handle_powerup(p.type)
-                    self.powerups.remove(p)
-                
-                if p.rect.top > self.screen_height:
-                    self.powerups.remove(p)
+        for p in self.powerups:
+            if self.collide(self.player, p):
+                self.handle_powerup(p.type)
+                self.powerups.remove(p)
+            
+            if p.rect.top > self.screen_height:
+                self.powerups.remove(p)
     
         for a in self.animations:
             a.update()

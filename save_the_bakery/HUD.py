@@ -17,7 +17,7 @@ class HUD:
         if hp or hp == 0:
             self.player_lifes = hp
         
-        if powerups:
+        if powerups or powerups == 0:
             self.powerups = powerups
 
     
