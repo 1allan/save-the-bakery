@@ -30,6 +30,7 @@ class Player:
         self.bullet_lines = PLAYER_BULLET_LINES
         self.fire_cadence = fire_cadence
         self.last_shot = pygame.time.get_ticks()
+        self.powerups = []
         self.hp = PLAYER_HP
         self.last_damage = pygame.time.get_ticks()
         self.invencible = False
@@ -76,7 +77,7 @@ class Player:
                 self.bullets.append(b)
 
     
-    def handle_hp(self, quantity=-1):
+    def handle_hp(self, quantity=-1) -> bool:
         now = pygame.time.get_ticks()
 
         if quantity < 0:
@@ -85,6 +86,8 @@ class Player:
                 self.hp += quantity
         else:
             self.hp += quantity
+        
+        return self.hp
 
     
     def update(self):

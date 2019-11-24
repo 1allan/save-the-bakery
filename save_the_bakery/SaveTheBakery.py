@@ -19,6 +19,8 @@ from Asteroid import Asteroid
 from DeathStar import DeathStar
 from PowerUp import PowerUp
 from Animation import Animation
+from HUD import HUD
+
 
 class SaveTheBakery:
     
@@ -31,6 +33,7 @@ class SaveTheBakery:
         self.screen = pygame.display.set_mode(RESOLUTION)
         self.background = Background(screen=self.screen)
         self.player = Player(self.screen)
+        self.hud = HUD(self.screen)
         self.asteroids = []
         self.powerups = []
         self.all_bullets = []
@@ -60,6 +63,7 @@ class SaveTheBakery:
         self.player.update()
         self.generate_asteroids()
         self.generate_powerups()
+        self.hud.update()
 
         for b in self.all_bullets:
             b.update(self.screen)
@@ -80,14 +84,16 @@ class SaveTheBakery:
                 self.all_bullets += a.bullets
             
             if self.collide(self.player, a):
-                if self.player.hp > 0:
-                    self.player.handle_hp()
+                if self.player.handle_hp() >= 0:
+                    self.hud.change(hp=self.player.hp)
                 else:    
                     self.animations.append(Animation(
                         self.screen,
                         'explosion',
                         (self.player.rect.left, self.player.rect.top)
                     ))
+                    self.player.rect.left = self.screen_width / 2  
+                    self.player.rect.top = self.screen_height * .8  
                     
             current_a = a
             for b in self.player.bullets:
@@ -178,12 +184,17 @@ class SaveTheBakery:
     def handle_powerup(self, pw):
         if pw['effect'] == 'one_more_bullet' and self.player.bullet_lines < PLAYER_MAX_BULLETS:
             self.player.bullet_lines += pw['modifier']
-        
+            self.player.powerups.append(pw)
+            
         elif pw['effect'] == 'fire_cadence' and self.player.fire_cadence > PLAYER_MAX_FIRE_CADENCE:
             self.player.fire_cadence -= pw['modifier']
-        
+            self.player.powerups.append(pw)
+            
         elif pw['effect'] == 'spaceship_speed' and self.player.speed < PLAYER_MAX_SPEED:
             self.player.speed += pw['modifier']
+            self.player.powerups.append(pw)
+        
+        self.hud.change(powerups=len(self.player.powerups))
     
 
     def key_press(self):

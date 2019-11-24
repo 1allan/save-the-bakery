@@ -23,10 +23,11 @@ class DeathStar(Asteroid):
 
             self.bullets.append(Bullet(
                 [self.rect.left + self.width / 2, self.rect.top + self.height / 2],
-                (15, 40),
+                (10, 60),
                 8,
                 DeathStar,
-                -1
+                -1,
+                'assets/enemybullet.png'
             ))
 
         self.rect.left += 1

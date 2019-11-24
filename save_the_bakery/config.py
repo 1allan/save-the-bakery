@@ -40,7 +40,7 @@ ASTEROID_SPEED_RANGE = (2, 4)
 POWERUP_SIZE = (30, 30)
 POWERUP_LIST = [
     {'effect': 'one_more_bullet', 'modifier': 1},
-    {'effect': 'fire_cadence', 'modifier': 10},
+    {'effect': 'fire_cadence', 'modifier': 50},
     {'effect': 'spaceship_speed', 'modifier': 1}
 ]
 
@@ -55,7 +55,7 @@ PLAYER_BULLET_LINES = 1
 PLAYER_BULLET_SPEED = 10
 PLAYER_MAX_BULLETS = 3
 PLAYER_BULLET_SIZE = [10, 50] 
-PLAYER_FIRE_CADENCE = 600
+PLAYER_FIRE_CADENCE = 400
 PLAYER_MAX_FIRE_CADENCE = 1000
 PLAYER_BULLET_X_POS = [
     [PLAYER_POSITION[0] + PLAYER_SIZE[0] / 2], 
