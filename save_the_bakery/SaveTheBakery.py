@@ -37,6 +37,8 @@ class SaveTheBakery:
         self.animations = []
         self.asteroid_tick = pygame.time.get_ticks()
         self.powerup_tick = pygame.time.get_ticks()
+        self.paused = False
+        self.last_pause = pygame.time.get_ticks()
 
 
     def main(self):
@@ -45,66 +47,73 @@ class SaveTheBakery:
                 if event.type == pygame.QUIT:
                     pygame.quit()
 
-            self.background.update()
-            self.player.update()
-            self.generate_asteroids()
-            self.generate_powerups()
-
-            for a in self.animations:
-                a.update()
-                if a.ended:
-                    self.animations.remove(a)
-
-            for b in self.all_bullets:
-                b.update(self.screen)
-                if b.shooter not in self.asteroids:
-                    self.all_bullets.remove(b)
-                elif -100 < b.rect.top < RESOLUTION[1] + 100:
-                    self.all_bullets.remove(b)
+            if not self.paused:
+                self.render()
             
-            self.all_bullets += self.player.bullets
-
-            for a in self.asteroids:
-                if a.rect.top < self.screen_height:
-                    a.update(self.screen)
-                else:
-                    self.asteroids.remove(a)
-                
-                if type(a) is DeathStar:
-                    self.all_bullets += a.bullets
-                
-                if self.collide(self.player, a):
-                    if self.player.hp > 0:
-                        self.player.handle_hp()
-                    else:    
-                        self.animations.append(Animation(
-                            self.screen,
-                            'explosion',
-                            (self.player.rect.left, self.player.rect.top)
-                        ))
-                        self.player.rect.left = self.screen.get_width() / 2
-                        self.player.rect.top = self.screen.get_height() * .8
-                        
-                current_a = a
-                for b in self.player.bullets:
-                    if self.collide(b, a):
-                        self.generate_powerups((a.rect.left, a.rect.top))
-                        self.asteroids.remove(a)
-                        self.player.bullets.remove(b)
-                        
-                    if current_a not in self.asteroids:
-                        break        
-
-                for p in self.powerups:
-                    if self.collide(self.player, p):
-                        self.handle_powerup(p.type)
-                        self.powerups.remove(p)
-                    
-                    if p.rect.top > self.screen_height:
-                        self.powerups.remove(p)            
-
+            self.key_press()          
             self.clock.tick(CLOCK)
             pygame.display.update()
+
+    
+    def render(self):
+        self.background.update()
+        self.player.update()
+        self.generate_asteroids()
+        self.generate_powerups()
+
+        for b in self.all_bullets:
+            b.update(self.screen)
+            if b.shooter not in self.asteroids:
+                self.all_bullets.remove(b)
+            elif -100 < b.rect.top < RESOLUTION[1] + 100:
+                self.all_bullets.remove(b)
+        
+        self.all_bullets += self.player.bullets
+
+        for a in self.asteroids:
+            if a.rect.top < self.screen_height:
+                a.update(self.screen)
+            else:
+                self.asteroids.remove(a)
+            
+            if type(a) is DeathStar:
+                self.all_bullets += a.bullets
+            
+            if self.collide(self.player, a):
+                if self.player.hp > 0:
+                    self.player.handle_hp()
+                else:    
+                    self.animations.append(Animation(
+                        self.screen,
+                        'explosion',
+                        (self.player.rect.left, self.player.rect.top)
+                    ))
+                    
+            current_a = a
+            for b in self.player.bullets:
+                if self.collide(b, a):
+                    a.hp -= 1
+                    if a.hp <= 0:
+                        self.generate_powerups((a.rect.left, a.rect.top))
+                        self.asteroids.remove(a)
+                    self.animations.append(Animation(self.screen, 'explosion', (a.rect.left, a.rect.top)))
+                    self.player.bullets.remove(b)
+                    
+                if current_a not in self.asteroids:
+                    break        
+
+            for p in self.powerups:
+                if self.collide(self.player, p):
+                    self.handle_powerup(p.type)
+                    self.powerups.remove(p)
+                
+                if p.rect.top > self.screen_height:
+                    self.powerups.remove(p)
+    
+        for a in self.animations:
+            a.update()
+            if a.ended:
+                self.animations.remove(a)
 
     
     def collide(self, object1, object2) -> bool:
@@ -175,3 +184,19 @@ class SaveTheBakery:
         
         elif pw['effect'] == 'spaceship_speed' and self.player.speed < PLAYER_MAX_SPEED:
             self.player.speed += pw['modifier']
+    
+
+    def key_press(self):
+        keys = pygame.key.get_pressed()
+        now = pygame.time.get_ticks()
+
+        if keys[pygame.K_p] and now - self.last_pause > 500:
+            self.last_pause = now
+            self.paused = not self.paused
+        
+        if not self.paused:
+            if keys[pygame.K_w] or keys[pygame.K_a] or keys[pygame.K_s] or keys[pygame.K_d]:
+                self.player.move(keys)
+            
+            if keys[pygame.K_SPACE]:
+                self.player.shoot()

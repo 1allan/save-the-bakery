@@ -4,13 +4,14 @@ from config import ANIMATIONS
 
 class Animation:
 
-    def __init__(self, screen, name, position, velocity=60):
+    def __init__(self, screen, name, position, size=(40, 40), velocity=60):
         self.screen = screen
         self.center = screen.get_width() / 2, screen.get_height() / 2
         self.last_tick = pygame.time.get_ticks()
         self.name = name
         self.velocity = velocity
         self.image = pygame.image.load(ANIMATIONS[self.name][0])
+        self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
         self.rect.center = [self.rect.left + self.image.get_width() / 2, self.rect.top + self.image.get_height() / 2] 
@@ -33,4 +34,4 @@ class Animation:
             self.last_tick = now
             self.change_image()
         
-        self.screen.blit(self.image, self.rect.center)
+        self.screen.blit(self.image, (self.rect.left, self.rect.top))

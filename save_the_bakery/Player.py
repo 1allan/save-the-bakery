@@ -23,6 +23,7 @@ class Player:
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
         self.width, self.height = size
+        self.size = size
         self.screen = screen
         self.speed = speed
         self.bullets = []
@@ -31,6 +32,7 @@ class Player:
         self.last_shot = pygame.time.get_ticks()
         self.hp = PLAYER_HP
         self.last_damage = pygame.time.get_ticks()
+        self.invencible = False
 
 
     def move(self, keys):
@@ -86,10 +88,4 @@ class Player:
 
     
     def update(self):
-        keys = pygame.key.get_pressed()
-        
-        if keys[pygame.K_SPACE]:
-            self.shoot()
-        
-        self.move(keys)
         self.screen.blit(self.image, self.rect)

@@ -13,9 +13,10 @@ class Asteroid:
         self.rect = self.image.get_rect()
         self.position = position
         self.rect.left, self.rect.top = self.position
+        self.rect.center = self.position
         self.width, self.height = [self.size] * 2
         self.speed = randint(speed[0], speed[1])
-        self.hp = size
+        self.hp = self.size / 30
         
     def update(self, screen):
         self.rect.top += self.speed
