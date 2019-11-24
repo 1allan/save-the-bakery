@@ -3,7 +3,7 @@ import pygame
 from config import (
     PLAYER_IMAGE,
     PLAYER_SIZE, 
-    PLAYER_LIFES, 
+    PLAYER_HP, 
     PLAYER_POSITION, 
     PLAYER_SPEED,
     PLAYER_FIRE_CADENCE,
@@ -29,7 +29,8 @@ class Player:
         self.bullet_lines = PLAYER_BULLET_LINES
         self.fire_cadence = fire_cadence
         self.last_shot = pygame.time.get_ticks()
-        self.lifes = PLAYER_LIFES
+        self.hp = PLAYER_HP
+        self.last_damage = pygame.time.get_ticks()
 
 
     def move(self, keys):
@@ -73,6 +74,16 @@ class Player:
                 self.bullets.append(b)
 
     
+    def handle_hp(self, quantity=-1):
+        now = pygame.time.get_ticks()
+
+        if quantity < 0:
+            if now - self.last_damage > 1000 or self.hp == PLAYER_HP:
+                self.last_damage = now
+                self.hp += quantity
+        else:
+            self.hp += quantity
+
     
     def update(self):
         keys = pygame.key.get_pressed()

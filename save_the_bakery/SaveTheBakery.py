@@ -18,6 +18,7 @@ from Player import Player
 from Asteroid import Asteroid
 from DeathStar import DeathStar
 from PowerUp import PowerUp
+from Animation import Animation
 
 class SaveTheBakery:
     
@@ -33,6 +34,7 @@ class SaveTheBakery:
         self.asteroids = []
         self.powerups = []
         self.all_bullets = []
+        self.animations = []
         self.asteroid_tick = pygame.time.get_ticks()
         self.powerup_tick = pygame.time.get_ticks()
 
@@ -43,8 +45,16 @@ class SaveTheBakery:
                 if event.type == pygame.QUIT:
                     pygame.quit()
 
-            self.background.update()    
-            
+            self.background.update()
+            self.player.update()
+            self.generate_asteroids()
+            self.generate_powerups()
+
+            for a in self.animations:
+                a.update()
+                if a.ended:
+                    self.animations.remove(a)
+
             for b in self.all_bullets:
                 b.update(self.screen)
                 if b.shooter not in self.asteroids:
@@ -52,10 +62,6 @@ class SaveTheBakery:
                 elif -100 < b.rect.top < RESOLUTION[1] + 100:
                     self.all_bullets.remove(b)
             
-            self.player.update()
-            self.generate_asteroids()
-            self.generate_powerups()
-
             self.all_bullets += self.player.bullets
 
             for a in self.asteroids:
@@ -68,11 +74,17 @@ class SaveTheBakery:
                     self.all_bullets += a.bullets
                 
                 if self.collide(self.player, a):
-                    if self.player.lifes > 0:
-                        self.player.lifes -= 1
-                    else:
-                        print('DEAD')
-
+                    if self.player.hp > 0:
+                        self.player.handle_hp()
+                    else:    
+                        self.animations.append(Animation(
+                            self.screen,
+                            'explosion',
+                            (self.player.rect.left, self.player.rect.top)
+                        ))
+                        self.player.rect.left = self.screen.get_width() / 2
+                        self.player.rect.top = self.screen.get_height() * .8
+                        
                 current_a = a
                 for b in self.player.bullets:
                     if self.collide(b, a):

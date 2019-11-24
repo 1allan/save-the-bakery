@@ -18,6 +18,7 @@ POWERUPS_CHANCE = {
     'spaceship_speed': 33
 }
 
+
 #Images
 BACKGROUND_IMAGE = 'assets/background.jpg'
 ASTEROID_IMAGE = 'assets/asteroid.png'
@@ -25,25 +26,29 @@ POWERUP_IMAGE = 'assets/cake.png'
 BULLET_IMAGE = 'assets/bullet.png'
 PLAYER_IMAGE = 'assets/spaceship.png'
 
+
 #Background
 BACKGROUND_POSITION = [0, 0]
+
 
 #Asteroids
 ASTEROID_SIZE_RANGE = (1, 3)
 ASTEROID_SPEED_RANGE = (2, 4)
+
 
 #Powerups
 POWERUP_SIZE = (30, 30)
 POWERUP_LIST = [
     {'effect': 'one_more_bullet', 'modifier': 1},
     {'effect': 'fire_cadence', 'modifier': 10},
-    {'effect': 'spaceship_speed', 'modifier': 2}
+    {'effect': 'spaceship_speed', 'modifier': 1}
 ]
+
 
 #Player
 PLAYER_SIZE = (60, 80)
 PLAYER_POSITION = [RESOLUTION[0] / 2, RESOLUTION[1] * .85]
-PLAYER_LIFES = 3
+PLAYER_HP = 3
 PLAYER_SPEED = 3
 PLAYER_MAX_SPEED = 8
 PLAYER_BULLET_LINES = 1
@@ -59,3 +64,8 @@ PLAYER_BULLET_X_POS = [
 ]
 PLAYER_BULLET_Y_POS = PLAYER_POSITION[1] + PLAYER_SIZE[1] / 2
 
+
+#Animation lists
+ANIMATIONS = {
+    'explosion': ['assets/explosion0.png','assets/explosion1.png','assets/explosion2.png','assets/explosion3.png','assets/explosion4.png','assets/explosion5.png','assets/explosion6.png','assets/explosion7.png','assets/explosion8.png']
+}
