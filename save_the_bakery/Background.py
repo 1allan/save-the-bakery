@@ -2,7 +2,7 @@ import pygame
 
 from config import BACKGROUND_IMAGE, BACKGROUND_POSITION
 
-class Background(pygame.sprite.Sprite):
+class Background:
     
     def __init__(self, screen, image_file=BACKGROUND_IMAGE, position=BACKGROUND_POSITION):
         pygame.sprite.Sprite.__init__(self)

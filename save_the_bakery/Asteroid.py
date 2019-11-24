@@ -3,7 +3,7 @@ from random import randint
 
 from config import ASTEROID_SIZE_RANGE, ASTEROID_IMAGE, ASTEROID_SPEED_RANGE
 
-class Asteroid(pygame.sprite.Sprite):
+class Asteroid:
 
     def __init__(self, position, speed=ASTEROID_SPEED_RANGE, image_file=ASTEROID_IMAGE, size=ASTEROID_SIZE_RANGE):
         pygame.sprite.Sprite.__init__(self)

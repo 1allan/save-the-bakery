@@ -59,10 +59,10 @@ class Player:
 
             for i in range(self.bullet_lines):
                 if self.bullet_lines == 3:
-                    if i == 3:
-                        bullet_y_pos -= 50
+                    if i == 1:
+                        bullet_y_pos -= 30
                     else:
-                        bullet_y_pos += 50
+                        bullet_y_pos += 30
             
                 b = Bullet(
                     [bullet_x_pos[self.bullet_lines - 1][i], bullet_y_pos], 
