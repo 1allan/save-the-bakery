@@ -25,9 +25,6 @@ from HUD import HUD
 class SaveTheBakery:
     
     def __init__(self):
-        pygame.init()
-        pygame.display.init()
-        pygame.display.set_caption('Save The Bakery')
         self.clock = pygame.time.Clock()
         self.screen_width, self.screen_height = RESOLUTION
         self.screen = pygame.display.set_mode(RESOLUTION)
@@ -45,6 +42,10 @@ class SaveTheBakery:
 
 
     def main(self):
+        pygame.init()
+        pygame.display.init()
+        pygame.display.set_caption('Save The Bakery')
+        
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
