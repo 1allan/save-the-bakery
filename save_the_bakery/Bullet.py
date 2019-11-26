@@ -4,8 +4,7 @@ from config import BULLET_IMAGE
 
 class Bullet: 
 
-    def __init__(self, position, size, speed, shooter, direction=1, image_file=BULLET_IMAGE):
-        pygame.sprite.Sprite.__init__(self)
+    def __init__(self, position, size, speed, shooter, direction=(1, 1), image_file=BULLET_IMAGE):
         self.image = pygame.image.load(image_file).convert()
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
@@ -19,5 +18,5 @@ class Bullet:
         self.rect.top -= self.height / 2 
 
     def update(self, screen):
-        self.rect.top -= self.speed * self.direction
+        self.rect.top -= self.speed * self.direction[0]
         screen.blit(self.image, self.rect)

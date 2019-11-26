@@ -1,6 +1,8 @@
 import pygame
 from random import randint
 
+from config import DEATHSTAR_FIRE_CADENCE, DEATHSTAR_START_SHOOTING
+
 from Asteroid import Asteroid
 from Bullet import Bullet
 
@@ -11,8 +13,8 @@ class DeathStar(Asteroid):
         self.bullets = []
         self.rect.top = randint(self.height, 300)
         self.rect.left = -self.width
-        self.fire_cadence = 800
-        self.start_shooting = 1800
+        self.fire_cadence = DEATHSTAR_FIRE_CADENCE
+        self.start_shooting = DEATHSTAR_START_SHOOTING
         self.last_shot = pygame.time.get_ticks()
     
     def update(self, screen):
@@ -26,7 +28,7 @@ class DeathStar(Asteroid):
                 (10, 60),
                 8,
                 DeathStar,
-                -1,
+                (-1, 1),
                 'assets/enemybullet.png'
             ))
 

@@ -17,7 +17,6 @@ from Bullet import Bullet
 class Player:
 
     def __init__(self, screen, position=PLAYER_POSITION, size=PLAYER_SIZE, speed=PLAYER_SPEED, fire_cadence=PLAYER_FIRE_CADENCE, image_file=PLAYER_IMAGE):
-        pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image_file)
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
@@ -27,10 +26,10 @@ class Player:
         self.screen = screen
         self.speed = speed
         self.bullets = []
+        self.powerups = []
         self.bullet_lines = PLAYER_BULLET_LINES
         self.fire_cadence = fire_cadence
         self.last_shot = pygame.time.get_ticks()
-        self.powerups = []
         self.hp = PLAYER_HP
         self.last_damage = pygame.time.get_ticks()
         self.invencible = False
@@ -77,7 +76,7 @@ class Player:
                 self.bullets.append(b)
 
     
-    def handle_hp(self, quantity=-1) -> bool:
+    def handle_hp(self, quantity=-1) -> int:
         now = pygame.time.get_ticks()
 
         if quantity < 0:
