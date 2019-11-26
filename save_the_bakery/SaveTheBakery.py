@@ -68,11 +68,9 @@ class SaveTheBakery:
 
         for b in self.all_bullets:
             b.update(self.screen)
-            if b.shooter not in self.asteroids:
+            if b.shooter not in self.asteroids or b.rect.top < - 100:
                 self.all_bullets.remove(b)
-            elif -100 < b.rect.top < RESOLUTION[1] + 100:
-                self.all_bullets.remove(b)
-            
+
             if b.shooter == DeathStar and self.collide(b, self.player):
                 self.player.handle_hp()
                 self.hud.change(hp=self.player.hp)
