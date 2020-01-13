@@ -1,16 +1,13 @@
 import pygame
 from random import choice
 
+from Entity import Entity
 from config import POWERUP_LIST, POWERUP_SIZE, POWERUP_IMAGE
 
-class PowerUp:
+class PowerUp(Entity):
     
     def __init__(self, position, size=POWERUP_SIZE,  image_file=POWERUP_IMAGE):
-        self.image = pygame.image.load(image_file)
-        self.image = pygame.transform.scale(self.image, size)
-        self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = position
-        self.width, self.height = size
+        super().__init__(position, size, image_file)
         self.type = choice(POWERUP_LIST)
 
 

@@ -12,17 +12,13 @@ from config import (
     PLAYER_BULLET_SIZE
 )
 
+from Entity import Entity
 from Bullet import Bullet
 
-class Player:
+class Player(Entity):
 
     def __init__(self, screen, position=PLAYER_POSITION, size=PLAYER_SIZE, speed=PLAYER_SPEED, fire_cadence=PLAYER_FIRE_CADENCE, image_file=PLAYER_IMAGE):
-        self.image = pygame.image.load(image_file)
-        self.image = pygame.transform.scale(self.image, size)
-        self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = position
-        self.width, self.height = size
-        self.size = size
+        super().__init__(position, size, image_file)
         self.screen = screen
         self.speed = speed
         self.bullets = []

@@ -1,15 +1,12 @@
 import pygame
 
+from Entity import Entity
 from config import BULLET_IMAGE
 
-class Bullet: 
+class Bullet(Entity): 
 
-    def __init__(self, position, size, speed, shooter, direction=(1, 1), image_file=BULLET_IMAGE):
-        self.image = pygame.image.load(image_file).convert()
-        self.image = pygame.transform.scale(self.image, size)
-        self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = position
-        self.width, self.height = size
+    def __init__(self, position, size, speed, shooter, direction=(1, 0), image_file=BULLET_IMAGE):
+        super().__init__(position, size, image_file, convert_image=True)
         self.speed = speed
         self.direction = direction
         self.shooter = shooter

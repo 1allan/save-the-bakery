@@ -8,7 +8,7 @@ CLOCK = 120
 #Entity generation
 ASTEROID_GEN_INTERVAL = 600
 SPECIAL_ASTEROIDS = [
-    {'name': 'deathstar', 'chance': 10}
+    {'name': 'deathstar', 'chance': 40}
 ]
 POWERUP_GEN_INTERVAL =  0 #set 0 to deactivate
 POWERUP_ON_KILL_CHANCE = 30
@@ -36,6 +36,7 @@ ASTEROID_SIZE_RANGE = (1, 3)
 ASTEROID_SPEED_RANGE = (2, 4)
 DEATHSTAR_FIRE_CADENCE = 800
 DEATHSTAR_START_SHOOTING = 1800
+DEATHSTAR_IMAGE = 'assets/deathstar.png'
 
 
 

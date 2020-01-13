@@ -1,7 +1,7 @@
 import pygame
 from random import randint
 
-from config import DEATHSTAR_FIRE_CADENCE, DEATHSTAR_START_SHOOTING
+from config import DEATHSTAR_FIRE_CADENCE, DEATHSTAR_START_SHOOTING, DEATHSTAR_IMAGE
 
 from Asteroid import Asteroid
 from Bullet import Bullet
@@ -9,7 +9,7 @@ from Bullet import Bullet
 class DeathStar(Asteroid):
 
     def __init__(self, position):
-        super().__init__(position, image_file='assets/deathstar.png')
+        super().__init__(position, image_file=DEATHSTAR_IMAGE)
         self.bullets = []
         self.rect.top = randint(self.height, 300)
         self.rect.left = -self.width
