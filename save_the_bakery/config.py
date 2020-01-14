@@ -8,7 +8,7 @@ CLOCK = 120
 #Entity generation
 ASTEROID_GEN_INTERVAL = 600
 SPECIAL_ASTEROIDS = [
-    {'name': 'deathstar', 'chance': 40}
+    {'name': 'deathstar', 'chance': 20}
 ]
 POWERUP_GEN_INTERVAL =  0 #set 0 to deactivate
 POWERUP_ON_KILL_CHANCE = 30
